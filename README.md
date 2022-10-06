@@ -35,3 +35,35 @@ flit init
 ```
 
 This also generates a license file, which is crucial for allowing others to use your package.
+
+## Create the package and install it
+
+We create the initial package with a single file: `src/aiida_eos/__init__.py`.
+This file should have a docstring that describes the package, and a `__version__` variable.
+
+We now want to install the package in editable mode.
+This means that we can make changes to the package, and they will be immediately available to Python.
+
+First we create a [virtual environment](https://packaging.python.org/en/latest/tutorials/installing-packages/#creating-and-using-virtual-environments), and activate it:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+Virtual environments are a way of isolating Python environments.
+
+We can now install the package in editable mode:
+
+```bash
+python -m pip install --upgrade pip
+pip install -e .
+```
+
+We can now import the package in Python:
+
+```python
+>>> import aiida_eos
+>>> aiida_eos.__version__
+'0.0.1'
+```
