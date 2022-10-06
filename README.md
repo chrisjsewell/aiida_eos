@@ -126,3 +126,45 @@ See [tox-conda](https://tox-conda.readthedocs.io) for an example of how to use t
 
 We can use [GitHub Actions](https://github.com/features/actions) to automatically run the tests on each commit.
 This is done by adding a `.github/workflows/test.yml` file.
+
+## Adding the rescale calcfunction
+
+We shall add a `rescale` calcfunction to the package.
+This is a simple function that takes a structure, and rescales it by a given factor.
+
+Note that up until now, we have not added any AiiDA specific code.
+Now that we want to add an AiiDA specific calcfunction, we need to add the `aiida-core` dependency to the `pyproject.toml` file, and also `ase` for the structure manipulation.
+
+If using `tox`, we can regenerate our virtual environment with:
+
+```bash
+tox -r
+```
+
+### Type annotations
+
+We will also notice that we added type annotations to the function.
+This is a good practice, to provide static type inference, and also allows us to use tools like [mypy](http://mypy-lang.org/) to check the type annotations.
+
+### Testing the calcfunction
+
+We can now add a test for the `rescale` calcfunction.
+In fact, if we were to use test-driven development, we would first write the test, and then write the code to make the test pass!
+
+Since the calcfunction needs to store data to an AiiDa profile, we need to create a profile for the tests.
+We can do this by utilising the [pgtest package](https://pypi.org/project/pgtest/) to create a temporary, local PostgreSQL database cluster, which allows us to create a temporary AiiDA profile, which we add to the `pyproject.toml` test dependencies.
+
+For this we will first need an [PostgreSQL](https://www.postgresql.org/) server running, with which to connect.
+There are numerous ways to do this, such as using the [Docker image](https://hub.docker.com/_/postgres), or installing via [Homebrew](https://brew.sh/) on macOS, or via the [PostgreSQL apt repository](https://www.postgresql.org/download/linux/ubuntu/) on Ubuntu.
+
+To create the profile for the tests, we can add a `conftest.py` file to the `tests` directory.
+Then we register the AiiDA [pytest fixtures](https://docs.pytest.org/en/6.2.x/fixture.html) in it.
+You can see all the available fixtures by running `pytest --fixtures` (or `tox -- --fixtures`).
+The initial one we need is the `aiida_profile_clean` fixture, which creates a temporary profile, and tears it down at the end of the test.
+
+We can now add a passing test for the `rescale` calcfunction.
+
+### Setting up PostgreSQL on GitHub Actions
+
+We also need to start a PostgreSQL server for our GitHub Actions, by specifying a service in the `test.yml` file.
+This actually uses the [PostgreSQL Docker image](https://hub.docker.com/_/postgres), which is started before the tests are run.
