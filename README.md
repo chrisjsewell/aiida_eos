@@ -86,3 +86,43 @@ We shall add a few additional hooks to the configuration file:
 - `black`: a Python code formatter
 - `flake8`: a Python linter
 - `isort`: a tool to sort the Python imports
+
+## Adding testing
+
+We shall use [pytest](https://docs.pytest.org/en/latest/) to run tests on our package.
+To install pytest, we shall add it to an `optional-dependencies` section in the `pyproject.toml` file.
+This is because we only need pytest to run the tests, and not to use the package.
+
+We can now install the package, with the optional dependencies:
+
+```bash
+pip install -e ".[test]"
+```
+
+We can now add a test to the package.
+We shall add a test that checks that the package can be imported.
+This is done by adding a `tests` directory, and a `test_import.py` file in it.
+
+Now we can run the tests:
+
+```bash
+pytest
+```
+
+To check the coverage of the tests, we can run:
+
+```bash
+pytest --cov=aiida_eos
+```
+
+### Using tox
+
+The [tox](https://tox.readthedocs.io) CLI tool is an optional way to automate both setting up the virtual environment, then running the tests within it.
+See the `pyproject.toml` section for the configuration.
+You can then simply run `tox` to run the tests, or `tox -e py39` to run with a certain python version.
+See [tox-conda](https://tox-conda.readthedocs.io) for an example of how to use tox with conda.
+
+### Adding GitHub Actions
+
+We can use [GitHub Actions](https://github.com/features/actions) to automatically run the tests on each commit.
+This is done by adding a `.github/workflows/test.yml` file.
