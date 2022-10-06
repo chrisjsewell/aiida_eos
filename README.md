@@ -67,3 +67,22 @@ We can now import the package in Python:
 >>> aiida_eos.__version__
 '0.0.1'
 ```
+
+## Adding formatting and linting with pre-commit
+
+We shall use [pre-commit](https://pre-commit.com/) to automatically format and lint the code.
+This will ensure that the code is formatted consistently, and that it conforms to the style guide.
+
+We can initialise a pre-commit configuration file with:
+
+```bash
+pre-commit sample-config > .pre-commit-config.yaml
+pre-commit autoupdate
+pre-commit install
+```
+
+We shall add a few additional hooks to the configuration file:
+
+- `black`: a Python code formatter
+- `flake8`: a Python linter
+- `isort`: a tool to sort the Python imports
