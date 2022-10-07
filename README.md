@@ -182,3 +182,16 @@ We can do this by adding pytest fixtures to the `conftest.py` file.
 We also need to run against the actual `pw.x` executable.
 One way to do this is to use conda, to install the `quantum-espresso` package, which will install the `pw.x` executable in the `bin` directory of the conda environment.
 Another way we are developing is [aiida-testing](https://github.com/aiidateam/aiida-testing).
+
+## Publishing the package
+
+Once you have a working package, it is good to create a version tag, and a `CHANGELOG.md` to keep track of the changes.
+
+We can now publish the package to [PyPI](https://pypi.org/).
+First create an account on PyPI, and then create an API token.
+
+You can either use locally `flit publish` to publish the package, or use the GitHub Actions:
+Add the token to the `PYPI_KEY` secret in the GitHub repository settings.
+Then we add a publishing workflow that runs on a new release.
+
+Once released to PyPI (or before) you can make a PR to the [AiiDA plugin registry](https://github.com/aiidateam/aiida-registry) for others to find your plugin.

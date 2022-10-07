@@ -50,3 +50,25 @@ jobs:
           pip install -e .[test]
       - name: Test with pytest
         run: pytest
+
+  publish:
+    name: Publish to PyPi
+    needs: [tests]
+    if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+    - name: install flit
+      run: |
+        pip install flit~=3.4
+    - name: Build and publish
+      run: |
+        flit publish
+      env:
+        FLIT_USERNAME: __token__
+        FLIT_PASSWORD: ${{ secrets.PYPI_KEY }}
