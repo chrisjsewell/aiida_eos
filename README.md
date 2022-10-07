@@ -168,3 +168,17 @@ We can now add a passing test for the `rescale` calcfunction.
 
 We also need to start a PostgreSQL server for our GitHub Actions, by specifying a service in the `test.yml` file.
 This actually uses the [PostgreSQL Docker image](https://hub.docker.com/_/postgres), which is started before the tests are run.
+
+## Adding the EquationOfState workchain
+
+We shall now add the workflow itself.
+
+We add an `project.entry-points."aiida.workflows"` section to the `pyproject.toml` file, to register the `EquationOfState` workchain as an entry point, for AiiDA to access.
+After re-installing the package (`pip install --no-deps -e ".[test]"`), we can now use the `verdi plugin list aiida.workflows eos.base` command and see the registered workflow.
+
+For the testing we need to set up some more resources, before running the workflow.
+We can do this by adding pytest fixtures to the `conftest.py` file.
+
+We also need to run against the actual `pw.x` executable.
+One way to do this is to use conda, to install the `quantum-espresso` package, which will install the `pw.x` executable in the `bin` directory of the conda environment.
+Another way we are developing is [aiida-testing](https://github.com/aiidateam/aiida-testing).

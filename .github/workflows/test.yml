@@ -10,8 +10,10 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version: ["3.8", "3.9", "3.10"]
+        qe-version: ["7.0"]
 
     services:
       postgres:
@@ -34,9 +36,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - name: Setup conda
+        uses: s-weigand/setup-conda@v1
         with:
+          # update-conda: true
           python-version: ${{ matrix.python-version }}
+          conda-channels: conda-forge
+      - name: install quantum-espresso
+        run: conda install -y qe==${{ matrix.qe-version }}
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip

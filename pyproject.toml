@@ -12,11 +12,15 @@ classifiers = ["License :: OSI Approved :: MIT License"]
 requires-python = ">=3.8"
 dependencies = [
     "aiida-core~=2.0",
+    "aiida-quantumespresso",
     "ase",
 ]
 
 [project.optional-dependencies]
 test = ["pytest", "pytest-cov", "pgtest"]
+
+[project.entry-points."aiida.workflows"]
+"eos.base" = "aiida_eos.eos:EquationOfState"
 
 [tool.isort]
 profile = "black"
