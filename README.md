@@ -1,5 +1,8 @@
 # aiida_eos
 
+[![Github-CI][github-ci]][github-link]
+[![PyPI][pypi-badge]][pypi-link]
+
 A demonstration of creating a Python package for AiiDA plugins.
 The goal is to create a plugin package for the Equation of State workflow demonstrated in: <https://aiida-qe-demo.readthedocs.io/en/latest/6_write_your_own_workflow.html>.
 
@@ -195,3 +198,8 @@ Add the token to the `PYPI_KEY` secret in the GitHub repository settings.
 Then we add a publishing workflow that runs on a new release.
 
 Once released to PyPI (or before) you can make a PR to the [AiiDA plugin registry](https://github.com/aiidateam/aiida-registry) for others to find your plugin.
+
+[github-ci]: https://github.com/chrisjsewell/aiida_eos/workflows/Test/badge.svg?branch=main
+[github-link]: https://github.com/chrisjsewell/aiida_eos
+[pypi-badge]: https://img.shields.io/pypi/v/aiida_eos.svg
+[pypi-link]: https://pypi.org/project/aiida_eos
